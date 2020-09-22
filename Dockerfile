@@ -2,7 +2,7 @@ FROM debian:9
 EXPOSE 443
 WORKDIR /opt
 
-RUN apt update && apt install -y wget cron socat nginx
+RUN apt update && apt install -y wget cron socat nginx procps
 RUN wget https://github.com/trojan-gfw/trojan/releases/download/v1.16.0/trojan-1.16.0-linux-amd64.tar.xz -O - | tar xJf -
 RUN wget -O - https://get.acme.sh | sh
 
