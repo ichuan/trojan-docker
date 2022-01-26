@@ -10,7 +10,7 @@ mkdir -p acme.sh
 docker volume create --driver local --opt type=none --opt device=$PWD/acme.sh \
   --opt o=bind acme.sh
 docker run -it --rm --name acme.sh -p 80:80 -v acme.sh:/root/.acme.sh ichuan/trojan \
-  /root/.acme.sh/acme.sh --home /root/.acme.sh --issue --standalone -d $DOMAIN 
+  /root/.acme.sh/acme.sh --home /root/.acme.sh --issue --standalone --server letsencrypt -d $DOMAIN
 ```
 Certs will be renewed automatically.
 
