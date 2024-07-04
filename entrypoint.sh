@@ -16,8 +16,6 @@ if test $# -eq 0; then
   (crontab -l | grep -v pkill; echo "0 1 * * * pkill --signal SIGUSR1 --exact trojan") | crontab -
   # nginx
   /etc/init.d/nginx start
-  # change acme.sh from standalone mode to webroot mode
-  sed -i -e "s#Le_Webroot='no'#Le_Webroot='/var/www/html'#g" /root/.acme.sh/${DOMAIN}/${DOMAIN}.conf
   # limits
   sysctl fs.file-max=6553560 2>/dev/null
   [ -f /etc/systemd/system.conf ] && sed -i "s/^#DefaultLimitNOFILE=.*/DefaultLimitNOFILE=500000/g" /etc/systemd/system.conf
