@@ -16,6 +16,15 @@ if test $# -eq 0; then
   (crontab -l | grep -v pkill; echo "0 1 * * * pkill --signal SIGUSR1 --exact trojan") | crontab -
   # nginx
   /etc/init.d/nginx start
+  # fix acme.sh generating _ecc dir
+  olddir="/root/.acme.sh/${DOMAIN}"
+  [ -d "${olddir}_ecc" ] && {
+    [ -s $olddir ] || {
+      rm -rf ${olddir}.bak
+      [ -d $olddir ] && mv $olddir ${olddir}.bak
+      ln -s "${olddir}_ecc" $olddir
+    }
+  }
   # limits
   sysctl fs.file-max=6553560 2>/dev/null
   [ -f /etc/systemd/system.conf ] && sed -i "s/^#DefaultLimitNOFILE=.*/DefaultLimitNOFILE=500000/g" /etc/systemd/system.conf
